@@ -33,6 +33,12 @@ RUN wget https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-75-gbaf03c2
 RUN mkdir -p ~/esp && cd ~/esp && tar xzf ../xtensa-esp32-elf-linux64-1.22.0-75-gbaf03c2-5.2.0.tar.gz && cd ..
 RUN rm xtensa-esp32-elf-linux64-1.22.0-75-gbaf03c2-5.2.0.tar.gz
 
+RUN wget https://capnproto.org/capnproto-c++-0.6.1.tar.gz
+RUN tar zxf capnproto-c++-0.6.1.tar.gz
+RUN cd capnproto-c++-0.6.1 && ./configure && make -j8 check && sudo make install
+RUN rm capnproto-c++-0.6.1.tar.gz
+RUN cd ..
+
 RUN cd esp && git clone --recursive https://github.com/espressif/esp-idf.git && cd ~
 
 USER root

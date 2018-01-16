@@ -29,9 +29,11 @@ USER $USER
 
 WORKDIR /home/$USER
 
-RUN wget https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-75-gbaf03c2-5.2.0.tar.gz
-RUN mkdir -p ~/esp && cd ~/esp && tar xzf ../xtensa-esp32-elf-linux64-1.22.0-75-gbaf03c2-5.2.0.tar.gz && cd ..
-RUN rm xtensa-esp32-elf-linux64-1.22.0-75-gbaf03c2-5.2.0.tar.gz
+
+ARG XTENSAFILE=xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
+RUN wget https://dl.espressif.com/dl/$XTENSAFILE
+RUN mkdir -p ~/esp && cd ~/esp && tar xzf ../$XTENSAFILE && cd ..
+RUN rm $XTENSAFILE
 
 RUN wget https://capnproto.org/capnproto-c++-0.6.1.tar.gz
 RUN tar zxf capnproto-c++-0.6.1.tar.gz

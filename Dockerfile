@@ -21,6 +21,7 @@ RUN echo "${USER} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-$USER
 
 RUN usermod -aG sudo $USER
 RUN usermod -aG plugdev $USER
+RUN usermod -aG dialout $USER
 
 VOLUME /projects
 RUN chown $USER:$USER /projects

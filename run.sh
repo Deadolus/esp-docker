@@ -20,4 +20,4 @@ DOCKER_ARGS="${DOCKER_ARGS} -h $HOSTNAME"
 fi
 
 #Run docker!
-docker run -i $DOCKER_ARGS -v `pwd`/projects:/projects --privileged --group-add plugdev $DOCKER_IMAGE $@
+docker run -i $DOCKER_ARGS -v `pwd`/projects:/projects --privileged --group-add plugdev --rm $DOCKER_IMAGE $@

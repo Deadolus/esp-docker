@@ -16,10 +16,10 @@ RUN groupadd -g 1000 -r $USER
 RUN useradd -u 1000 -g 1000 --create-home -r $USER
 
 #Change password
-RUN echo "$USER:$USER" | chpasswd 
+RUN echo "$USER:$USER" | chpasswd
 
 #Make sudo passwordless
-RUN echo "${USER} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-$USER 
+RUN echo "${USER} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-$USER
 
 RUN usermod -aG sudo $USER
 RUN usermod -aG plugdev $USER

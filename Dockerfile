@@ -6,7 +6,9 @@ ARG USER=esp
 
 RUN apt-get update && apt-get install -y \
         build-essential git neovim wget unzip sudo \
-        libncurses-dev flex bison gperf python python-serial \
+        libncurses-dev flex bison gperf \
+        python python-pip python-setuptools python-serial \
+        python-cryptography python-future \
         && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -30,19 +32,22 @@ USER $USER
 
 WORKDIR /home/$USER
 
-
-ARG XTENSAFILE=xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
-RUN wget https://dl.espressif.com/dl/$XTENSAFILE
-RUN mkdir -p ~/esp && cd ~/esp && tar xzf ../$XTENSAFILE && cd ..
-RUN rm $XTENSAFILE
-
 RUN wget https://capnproto.org/capnproto-c++-0.6.1.tar.gz
 RUN tar zxf capnproto-c++-0.6.1.tar.gz
 RUN cd capnproto-c++-0.6.1 && ./configure && make -j8 check && sudo make install
 RUN rm capnproto-c++-0.6.1.tar.gz
 RUN cd ..
 
+#ESPRESSIF environment install
+ARG XTENSAFILE=xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
+RUN wget https://dl.espressif.com/dl/$XTENSAFILE
+RUN mkdir -p ~/esp && cd ~/esp && tar xzf ../$XTENSAFILE && cd ..
+RUN rm $XTENSAFILE
+
+RUN pwd
 RUN cd esp && git clone --recursive https://github.com/espressif/esp-idf.git && cd ~
+RUN /usr/bin/python -m pip install --user -r ~/esp/esp-idf/requirements.txt
+#End ESPRESSIF environment install
 
 USER root
 

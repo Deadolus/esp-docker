@@ -3,6 +3,7 @@ FROM ubuntu:18.04
 MAINTAINER Simon Egli <esp-idf_3c3aee@egli.online>
 
 ARG USER=esp
+ARG ESP_BRANCH=v3.2
 
 RUN apt-get update && apt-get install -y \
         build-essential git neovim wget unzip sudo \
@@ -45,7 +46,7 @@ RUN mkdir -p ~/esp && cd ~/esp && tar xzf ../$XTENSAFILE && cd ..
 RUN rm $XTENSAFILE
 
 RUN pwd
-RUN cd esp && git clone --recursive https://github.com/espressif/esp-idf.git && cd ~
+RUN cd esp && git clone -b $ESP_BRANCH --recursive https://github.com/espressif/esp-idf.git && cd ~
 RUN /usr/bin/python -m pip install --user -r ~/esp/esp-idf/requirements.txt
 #End ESPRESSIF environment install
 

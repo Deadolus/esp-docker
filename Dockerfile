@@ -10,8 +10,12 @@ RUN apt-get update && apt-get install -y \
         libncurses-dev flex bison gperf \
         python python-pip python-setuptools python-serial \
         python-cryptography python-future \
+        clang clang-tools valgrind cmake libgtest-dev \
         && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+
+RUN cd /usr/src/googletest && sudo cmake CMakeLists.txt && sudo make && sudo make install
 
 RUN groupadd -g 1000 -r $USER
 RUN useradd -u 1000 -g 1000 --create-home -r $USER
